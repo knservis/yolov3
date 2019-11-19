@@ -10,6 +10,7 @@ def detect(save_txt=False, save_img=False):
     img_size = (320, 192) if ONNX_EXPORT else opt.img_size  # (320, 192) or (416, 256) or (608, 352) for (height, width)
     out, source, weights, half, view_img = opt.output, opt.source, opt.weights, opt.half, opt.view_img
     webcam = source == '0' or source.startswith('rtsp') or source.startswith('http') or source.endswith('.txt')
+    save_txt = opt.save_txt or save_txt
 
     # Initialize
     device = torch_utils.select_device(device='cpu' if ONNX_EXPORT else opt.device)
@@ -166,6 +167,7 @@ if __name__ == '__main__':
     parser.add_argument('--half', action='store_true', help='half precision FP16 inference')
     parser.add_argument('--device', default='', help='device id (i.e. 0 or 0,1) or cpu')
     parser.add_argument('--view-img', action='store_true', help='display results')
+    parser.add_argument('--save-txt', action='store_true', help='save txt')
     opt = parser.parse_args()
     print(opt)
 
