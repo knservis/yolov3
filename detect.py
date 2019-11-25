@@ -65,7 +65,7 @@ def detect(save_txt=False, save_img=False):
         torch.backends.cudnn.benchmark = True  # set True to speed up constant image size inference
         dataset = LoadStreams(source, img_size=img_size, half=half)
     else:
-        save_img = True
+        save_img = True and opt.no_save_image
         dataset = LoadImages(source, img_size=img_size, half=half)
 
     # Get names and colors
@@ -168,6 +168,7 @@ if __name__ == '__main__':
     parser.add_argument('--device', default='', help='device id (i.e. 0 or 0,1) or cpu')
     parser.add_argument('--view-img', action='store_true', help='display results')
     parser.add_argument('--save-txt', action='store_true', help='save txt')
+    parser.add_argument('--no-save-img', action='store_false', help='Don\'t save image')
     opt = parser.parse_args()
     print(opt)
 
