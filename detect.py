@@ -14,9 +14,6 @@ def detect(save_txt=False, save_img=False):
 
     # Initialize
     device = torch_utils.select_device(device='cpu' if ONNX_EXPORT else opt.device)
-    if os.path.exists(out):
-        shutil.rmtree(out)  # delete output folder
-    os.makedirs(out)  # make new output folder
 
     # Initialize model
     model = Darknet(opt.cfg, img_size)
