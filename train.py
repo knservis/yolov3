@@ -230,7 +230,7 @@ def train():
     t0 = time.time()
     torch_utils.model_info(model, report='summary')  # 'full' or 'summary'
     print('Using %g dataloader workers' % nw)
-    print('Starting %s for %g epochs...' % ('prebias' if opt.prebias else 'training', epochs))
+    print('Starting %s for %g epochs from start epoch %g...' % ('prebias' if opt.prebias else 'training', epochs, start_epoch))
     for epoch in range(start_epoch, epochs):  # epoch ------------------------------------------------------------------
         model.train()
         print(('\n' + '%10s' * 8) % ('Epoch', 'gpu_mem', 'GIoU', 'obj', 'cls', 'total', 'targets', 'img_size'))

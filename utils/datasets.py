@@ -257,7 +257,7 @@ class LoadStreams:  # multiple IP or RTSP cameras
 
 class LoadImagesAndLabels(Dataset):  # for training/testing
     def __init__(self, path, img_size=416, batch_size=16, augment=False, hyp=None, rect=False, image_weights=False,
-                 cache_labels=False, cache_images=False):
+                 cache_labels=False, cache_images=False, mosaic=False):
         path = str(Path(path))  # os-agnostic
         assert os.path.isfile(path), 'File not found %s. See %s' % (path, help_url)
         with open(path, 'r') as f:
@@ -276,6 +276,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         self.hyp = hyp
         self.image_weights = image_weights
         self.rect = False if image_weights else rect
+        self.mosaic = mosaic
 
         # Define labels
         self.label_files = [x.replace('images', 'labels').replace(os.path.splitext(x)[-1], '.txt')
@@ -415,7 +416,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         label_path = self.label_files[index]
 
         hyp = self.hyp
-        mosaic = True and self.augment  # load 4 images at a time into a mosaic (only during training)
+        mosaic = self.mosaic  # load 4 images at a time into a mosaic (only during training)
         if mosaic:
             # Load mosaic
             img, labels = load_mosaic(self, index)
